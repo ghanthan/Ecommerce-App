@@ -1,6 +1,7 @@
 package com.example.apirecycleview
 
 import android.content.Context
+import android.content.Intent
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,15 @@ class ProductsAdapter(val context: Context, val dataList: List<Product>):Recycle
         holder.productPrice.text = "$"+ currentData.price.toString()
         holder.productRating.text = currentData.rating.toString()
 
+        holder.titleLayout.setOnClickListener(View.OnClickListener {
+
+            val intent = Intent(context,ProductDetail::class.java)
+            intent.putExtra("productImage",currentData.thumbnail)
+            intent.putExtra("productPrice",currentData.price)
+            intent.putExtra("productDescription",currentData.description)
+            context.startActivity(intent)
+        })
+
     }
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
@@ -42,6 +52,7 @@ class ProductsAdapter(val context: Context, val dataList: List<Product>):Recycle
         val productPrice : TextView
         val productRating : TextView
         val prouctThumbnail : ImageView
+        val titleLayout : View
 
         init {
             productTitle = itemView.findViewById(R.id.tvTitle)
@@ -49,6 +60,7 @@ class ProductsAdapter(val context: Context, val dataList: List<Product>):Recycle
             productPrice = itemView.findViewById(R.id.tvPrice)
             productRating = itemView.findViewById(R.id.tvproductRating)
             prouctThumbnail = itemView.findViewById(R.id.productImage)
+            titleLayout = itemView.findViewById(R.id.titleLayout)
         }
     }
 }

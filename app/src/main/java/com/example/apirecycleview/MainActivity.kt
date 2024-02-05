@@ -2,6 +2,9 @@ package com.example.apirecycleview
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,13 +25,7 @@ lateinit var recyclerView: RecyclerView
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retrofitBuilder = Retrofit.Builder()
-            .baseUrl("https://dummyjson.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ProductsApiInterface::class.java)
-
-        val productList = retrofitBuilder.getProductsList()
+        val productList = retroFitProductApiCall()
 
         productList.enqueue(object : Callback<Data?> {
             override fun onResponse(call: Call<Data?>, response: Response<Data?>) {
@@ -41,12 +38,23 @@ lateinit var recyclerView: RecyclerView
             }
 
             override fun onFailure(call: Call<Data?>, t: Throwable) {
-
+                Log.e("ERROR",t.message.toString())
                 Toast.makeText(this@MainActivity,"Request to Product List failed",Toast.LENGTH_LONG).show()
 
             }
         })
 
 
+    }
+
+    private fun retroFitProductApiCall(): Call<Data> {
+
+        val retrofitBuilder = Retrofit.Builder()
+            .baseUrl("https://dummyjson.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ProductsApiInterface::class.java)
+
+        return retrofitBuilder.getProductsList()
     }
 }
