@@ -41,6 +41,7 @@ class ProductsAdapter(val context: Context, val dataList: List<Product>):Recycle
             intent.putExtra("productImage",currentData.thumbnail)
             intent.putExtra("productPrice",currentData.price)
             intent.putExtra("productDescription",currentData.description)
+            intent.putExtra("productTitle",currentData.title)
             context.startActivity(intent)
         })
 

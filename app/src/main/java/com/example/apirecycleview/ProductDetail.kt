@@ -19,8 +19,11 @@ class ProductDetail : AppCompatActivity() {
         val productPrice : TextView = findViewById(R.id.priceTextView)
 
         Picasso.get().load(intent.getStringExtra("productImage")?.toUri()).into(productImage)
-        productTitle.text = intent.getStringExtra("productTile").toString()
-        productPrice.text = intent.getStringExtra("productPrice").toString()
+
+        productPrice.text = "Price :" + intent.getIntExtra("productPrice",0).toString()
+        productTitle.text = intent.getStringExtra("productTitle")
+
+
 
 
 
